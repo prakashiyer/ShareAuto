@@ -6,7 +6,7 @@ public class DriverResponse {
 	
 	@JsonProperty("id")
 	private int id;
-	@JsonProperty("cab_id")
+	@JsonProperty("cabId")
 	private int cabId;
 	
 	public int getId() {

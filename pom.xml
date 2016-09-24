@@ -4,7 +4,7 @@
   <groupId>com.shareauto</groupId>
   <artifactId>ShareAuto</artifactId>
   <packaging>war</packaging>
-  <version>0.0.1-SNAPSHOT</version>
+  <version>0.0.1</version>
   <name>ShareAuto</name>
   <description>Cab sharing app</description>
   
@@ -31,7 +31,7 @@
     			<version>2.4</version>
     			<configuration>
     				<warSourceDirectory>webapp</warSourceDirectory>
-    				<failOnMissingWebXml>false</failOnMissingWebXml>
+    				<failOnMissingWebXml>true</failOnMissingWebXml>
     			</configuration>
     		</plugin>
     	</plugins>

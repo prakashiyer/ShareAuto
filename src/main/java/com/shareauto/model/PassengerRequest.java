@@ -14,8 +14,10 @@ public class PassengerRequest {
 	private String gender;
 	@JsonProperty("city")
 	private String city;
-	@JsonProperty("gpsCurrent")
-	private String gpsCurrent;
+	@JsonProperty("gpsCurrentLat")
+	private double gpsCurrentLat;
+	@JsonProperty("gpsCurrentLon")
+	private double gpsCurrentLon;
 	
 	public String getName() {
 		return name;
@@ -47,11 +49,17 @@ public class PassengerRequest {
 	public void setCity(String city) {
 		this.city = city;
 	}
-	public String getGpsCurrent() {
-		return gpsCurrent;
+	public double getGpsCurrentLat() {
+		return gpsCurrentLat;
 	}
-	public void setGpsCurrent(String gpsCurrent) {
-		this.gpsCurrent = gpsCurrent;
+	public void setGpsCurrentLat(double gpsCurrentLat) {
+		this.gpsCurrentLat = gpsCurrentLat;
+	}
+	public double getGpsCurrentLon() {
+		return gpsCurrentLon;
+	}
+	public void setGpsCurrentLon(double gpsCurrentLon) {
+		this.gpsCurrentLon = gpsCurrentLon;
 	}
 	
 

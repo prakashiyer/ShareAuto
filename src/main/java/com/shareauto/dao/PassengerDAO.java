@@ -38,11 +38,13 @@ public class PassengerDAO {
 	}
 	
 	@SuppressWarnings("unchecked")
-	public List<Passenger> findPassengers(String gpsStart, String gpsEnd) {
+	public List<Passenger> findPassengers(double gpsStartLat, double gpsStartLon, double gpsEndLat, double gpsEndLon) {
 		Session session = this.sessionFactory.getCurrentSession();		
-		Query query = session.createQuery("select * from ride where gpsCurrent >= ? and gpsCurrent <=?");
-		query.setParameter(1, gpsStart);
-		query.setParameter(1, gpsEnd);
+		Query query = session.createQuery("select * from ride where gpsCurrentLat >= ? and gpsCurrent <=?");
+		query.setParameter(1, gpsStartLat);
+		query.setParameter(2, gpsStartLon);
+		query.setParameter(3, gpsEndLat);
+		query.setParameter(4, gpsEndLon);
 		List<Passenger> passengers = Collections.checkedList(query.list(), Passenger.class);
 		LOGGER.info("Passengers found successfully, Passengers list size="+passengers.size());
 		return passengers;

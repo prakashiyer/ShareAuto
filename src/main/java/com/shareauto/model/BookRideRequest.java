@@ -4,39 +4,32 @@ import com.fasterxml.jackson.annotation.JsonProperty;
 
 public class BookRideRequest {
 	
-	@JsonProperty("gpsStart")
-	private String gpsStart;
-	@JsonProperty("driver_id")
+	@JsonProperty("gpsStartLat")
+	private double gpsStartLat;
+	@JsonProperty("gpsStartLon")
+	private double gpsStartLon;
+	@JsonProperty("driverId")
 	private int driverId;
-	@JsonProperty("gpsEnd")
-	private String gpsEnd;
-	@JsonProperty("user_id")
-	private int userId;
+	@JsonProperty("gpsEndLat")
+	private double gpsEndLat;
+	@JsonProperty("gpsEndLon")
+	private double gpsEndLon;
+	@JsonProperty("userId")
+	private String userId;
 	@JsonProperty("cost")
 	private double cost;
 	
-	public String getGpsStart() {
-		return gpsStart;
-	}
-	public void setGpsStart(String gpsStart) {
-		this.gpsStart = gpsStart;
-	}
-	public String getGpsEnd() {
-		return gpsEnd;
-	}
-	public void setGpsEnd(String gpsEnd) {
-		this.gpsEnd = gpsEnd;
-	}
+	
 	public int getDriverId() {
 		return driverId;
 	}
 	public void setDriverId(int driverId) {
 		this.driverId = driverId;
 	}
-	public int getUserId() {
+	public String getUserId() {
 		return userId;
 	}
-	public void setUserId(int userId) {
+	public void setUserId(String userId) {
 		this.userId = userId;
 	}
 	public double getCost() {
@@ -45,5 +38,30 @@ public class BookRideRequest {
 	public void setCost(double cost) {
 		this.cost = cost;
 	}
+	public double getGpsStartLat() {
+		return gpsStartLat;
+	}
+	public void setGpsStartLat(double gpsStartLat) {
+		this.gpsStartLat = gpsStartLat;
+	}
+	public double getGpsStartLon() {
+		return gpsStartLon;
+	}
+	public void setGpsStartLon(double gpsStartLon) {
+		this.gpsStartLon = gpsStartLon;
+	}
+	public double getGpsEndLat() {
+		return gpsEndLat;
+	}
+	public void setGpsEndLat(double gpsEndLat) {
+		this.gpsEndLat = gpsEndLat;
+	}
+	public double getGpsEndLon() {
+		return gpsEndLon;
+	}
+	public void setGpsEndLon(double gpsEndLon) {
+		this.gpsEndLon = gpsEndLon;
+	}
+	
 	
 }

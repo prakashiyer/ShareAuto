@@ -21,7 +21,7 @@ public class Driver {
 	private String name;
 	@Column(name="mobileNumber")
 	private int mobileNumber;
-	@Column(name="email_id")
+	@Column(name="emailId")
 	private String emailId;
 	@Column(name="gender")
 	private String gender;
@@ -33,12 +33,18 @@ public class Driver {
 	private String color;
 	@Column(name="cabNumber")
 	private String cabNumber;
-	@Column(name="gpsCurrent")
-	private String gpsCurrent;
+	@Column(name="gpsCurrentLat")
+	private double gpsCurrentLat;
+	@Column(name="gpsCurrentLon")
+	private double gpsCurrentLon;
 	
+	public Driver() {
+		
+	}
 	
 	public Driver(String name, int mobileNumber, String emailId, String gender, 
-			String city, String make, String color, String cabNumber, String gpsCurrent) {
+			String city, String make, String color, String cabNumber,
+			double gpsCurrentLat, double gpsCurrentLon) {
 		this.name = name;
 		this.mobileNumber = mobileNumber;
 		this.emailId = emailId;
@@ -47,7 +53,8 @@ public class Driver {
 		this.make = make;
 		this.color = color;
 		this.cabNumber = cabNumber;
-		this.gpsCurrent = gpsCurrent;
+		this.gpsCurrentLat = gpsCurrentLat;
+		this.gpsCurrentLon = gpsCurrentLon;
 	}
 
 
@@ -141,13 +148,23 @@ public class Driver {
 	}
 
 
-	public String getGpsCurrent() {
-		return gpsCurrent;
+	public double getGpsCurrentLat() {
+		return gpsCurrentLat;
 	}
 
 
-	public void setGpsCurrent(String gpsCurrent) {
-		this.gpsCurrent = gpsCurrent;
+	public void setGpsCurrentLat(double gpsCurrentLat) {
+		this.gpsCurrentLat = gpsCurrentLat;
+	}
+
+
+	public double getGpsCurrentLon() {
+		return gpsCurrentLon;
+	}
+
+
+	public void setGpsCurrentLon(double gpsCurrentLon) {
+		this.gpsCurrentLon = gpsCurrentLon;
 	}
 	
 }

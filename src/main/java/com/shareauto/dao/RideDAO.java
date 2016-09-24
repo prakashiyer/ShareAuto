@@ -37,11 +37,13 @@ public class RideDAO {
 	}
 	
 	@SuppressWarnings("unchecked")
-	public List<Ride> findRides(String gpsStart, String gpsEnd) {
+	public List<Ride> findRides(double gpsStartLat, double gpsStartLon, double gpsEndLat, double gpsEndLon) {
 		Session session = this.sessionFactory.getCurrentSession();		
 		Query query = session.createQuery("select * from ride where gpsStart >= ? and gpsEnd <=?");
-		query.setParameter(1, gpsStart);
-		query.setParameter(1, gpsEnd);
+		query.setParameter(1, gpsStartLat);
+		query.setParameter(2, gpsStartLon);
+		query.setParameter(3, gpsEndLat);
+		query.setParameter(4, gpsEndLon);
 		List<Ride> rides = Collections.checkedList(query.list(), Ride.class);
 		LOGGER.info("Rides found successfully, Rides list size="+rides.size());
 		return rides;

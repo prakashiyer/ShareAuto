@@ -20,8 +20,10 @@ public class DriverRequest {
 	private String cabMake;
 	@JsonProperty("cab_color")
 	private String cabColor;
-	@JsonProperty("gps_current")
-	private String gpsCurrent;
+	@JsonProperty("gpsCurrentLat")
+	private double gpsCurrentLat;
+	@JsonProperty("gpsCurrentLon")
+	private double gpsCurrentLon;
 	
 	public String getName() {
 		return name;
@@ -71,12 +73,17 @@ public class DriverRequest {
 	public void setCabColor(String cabColor) {
 		this.cabColor = cabColor;
 	}
-	public String getGpsCurrent() {
-		return gpsCurrent;
+	public double getGpsCurrentLat() {
+		return gpsCurrentLat;
 	}
-	public void setGpsCurrent(String gpsCurrent) {
-		this.gpsCurrent = gpsCurrent;
+	public void setGpsCurrentLat(double gpsCurrentLat) {
+		this.gpsCurrentLat = gpsCurrentLat;
+	}
+	public double getGpsCurrentLon() {
+		return gpsCurrentLon;
+	}
+	public void setGpsCurrentLon(double gpsCurrentLon) {
+		this.gpsCurrentLon = gpsCurrentLon;
 	}
 	
-
 }

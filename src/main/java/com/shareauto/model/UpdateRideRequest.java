@@ -4,9 +4,9 @@ import com.fasterxml.jackson.annotation.JsonProperty;
 
 public class UpdateRideRequest {
 	
-	@JsonProperty("ride_id")
+	@JsonProperty("rideId")
 	private int rideId;
-	@JsonProperty("user_id")
+	@JsonProperty("userId")
 	private int userId;
 
 	

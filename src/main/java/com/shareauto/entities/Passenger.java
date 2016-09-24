@@ -10,7 +10,7 @@ import javax.persistence.Table;
  *
  */
 @Entity
-@Table(name="passenger")
+@Table(name="user")
 public class Passenger {
 	
 	@Id
@@ -21,22 +21,30 @@ public class Passenger {
 	private String name;
 	@Column(name="mobileNumber")
 	private int mobileNumber;
-	@Column(name="email_id")
+	@Column(name="emailId")
 	private String emailId;
 	@Column(name="gender")
 	private String gender;
 	@Column(name="city")
 	private String city;
-	@Column(name="gpsCurrent")
-	private String gpsCurrent;
+	@Column(name="gpsCurrentLat")
+	private double gpsCurrentLat;
+	@Column(name="gpsCurrentLon")
+	private double gpsCurrentLon;
 	
-	public Passenger(String name, int mobileNumber, String emailId, String gender, String city, String gpsCurrent) {
+	public Passenger() {
+		
+	}
+	
+	public Passenger(String name, int mobileNumber, String emailId, String gender,
+			String city, double gpsCurrentLat, double gpsCurrentLon) {
 		this.name = name;
 		this.mobileNumber = mobileNumber;
 		this.emailId = emailId;
 		this.gender = gender;
 		this.city = city;
-		this.gpsCurrent = gpsCurrent;
+		this.gpsCurrentLat = gpsCurrentLat;
+		this.gpsCurrentLon = gpsCurrentLon;
 	}
 
 	public int getId() {
@@ -87,12 +95,20 @@ public class Passenger {
 		this.city = city;
 	}
 
-	public String getGpsCurrent() {
-		return gpsCurrent;
+	public double getGpsCurrentLat() {
+		return gpsCurrentLat;
 	}
 
-	public void setGpsCurrent(String gpsCurrent) {
-		this.gpsCurrent = gpsCurrent;
+	public void setGpsCurrentLat(double gpsCurrentLat) {
+		this.gpsCurrentLat = gpsCurrentLat;
+	}
+
+	public double getGpsCurrentLon() {
+		return gpsCurrentLon;
+	}
+
+	public void setGpsCurrentLon(double gpsCurrentLon) {
+		this.gpsCurrentLon = gpsCurrentLon;
 	}
 	
 }

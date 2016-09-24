@@ -25,21 +25,32 @@ public class Ride {
 	@Column(name="driverId")
 	private int driverId;
 	@Column(name="users")
-	private List<Integer> users;
-	@Column(name="gpsStart")
-	private String gpsStart;
-	@Column(name="gpsEnd")
-	private String gpsEnd;
+	private String users;
+	@Column(name="gpsStartLat")
+	private double gpsStartLat;
+	@Column(name="gpsStartLon")
+	private double gpsStartLon;
+	@Column(name="gpsEndLat")
+	private double gpsEndLat;
+	@Column(name="gpsEndLon")
+	private double gpsEndLon;
 	@Column(name="cost")
 	private double cost;
 	
+	public Ride() {
+		
+	}
 	
-	public Ride(Calendar date, int driverId, List<Integer> users, String gpsStart, String gpsEnd, double cost) {
+	public Ride(Calendar date, int driverId, String users,
+			double gpsStartLat, double gpsStartLon,
+			double gpsEndLat, double gpsEndLon, double cost) {
 		this.date = date;
 		this.driverId = driverId;
 		this.users = users;
-		this.gpsStart = gpsStart;
-		this.gpsEnd = gpsEnd;
+		this.gpsStartLat = gpsStartLat;
+		this.gpsStartLon = gpsStartLon;
+		this.gpsEndLat = gpsEndLat;
+		this.gpsEndLon = gpsEndLon;
 		this.cost = cost;
 	}
 
@@ -74,40 +85,58 @@ public class Ride {
 	}
 
 
-	public List<Integer> getUsers() {
+	public String getUsers() {
 		return users;
 	}
 
 
-	public void setUsers(List<Integer> users) {
+	public void setUsers(String users) {
 		this.users = users;
 	}
 
-
-	public String getGpsStart() {
-		return gpsStart;
+	public double getGpsStartLat() {
+		return gpsStartLat;
 	}
 
 
-	public void setGpsStart(String gpsStart) {
-		this.gpsStart = gpsStart;
+	public void setGpsStartLat(double gpsStartLat) {
+		this.gpsStartLat = gpsStartLat;
 	}
 
 
-	public String getGpsEnd() {
-		return gpsEnd;
+	public double getGpsStartLon() {
+		return gpsStartLon;
 	}
 
 
-	public void setGpsEnd(String gpsEnd) {
-		this.gpsEnd = gpsEnd;
+	public void setGpsStartLon(double gpsStartLon) {
+		this.gpsStartLon = gpsStartLon;
+	}
+
+
+	public double getGpsEndLat() {
+		return gpsEndLat;
+	}
+
+
+	public void setGpsEndLat(double gpsEndLat) {
+		this.gpsEndLat = gpsEndLat;
+	}
+
+
+	public double getGpsEndLon() {
+		return gpsEndLon;
+	}
+
+
+	public void setGpsEndLon(double gpsEndLon) {
+		this.gpsEndLon = gpsEndLon;
 	}
 
 
 	public double getCost() {
 		return cost;
 	}
-
 
 	public void setCost(double cost) {
 		this.cost = cost;

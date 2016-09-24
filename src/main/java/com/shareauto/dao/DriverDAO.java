@@ -38,10 +38,11 @@ public class DriverDAO {
 	}
 	
 	@SuppressWarnings("unchecked")
-	public List<Driver> findDrivers(String gps) {
+	public List<Driver> findDrivers(double gpsStartLat, double gpsStartLon) {
 		Session session = this.sessionFactory.getCurrentSession();		
-		Query query = session.createQuery("select * from driver where gpsCurrent > ?");
-		query.setParameter(1, gps);
+		Query query = session.createQuery("select * from driver where gpsCurrentLat > ? and gpsCurrentLat < ?");
+		query.setParameter(1, gpsStartLat);
+		query.setParameter(2, gpsStartLon);
 		List<Driver> drivers = Collections.checkedList(query.list(), Driver.class);
 		LOGGER.info("Drivers found successfully, Drivers list size="+drivers.size());
 		return drivers;

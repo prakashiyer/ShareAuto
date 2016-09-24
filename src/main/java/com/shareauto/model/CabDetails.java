@@ -4,13 +4,13 @@ import com.fasterxml.jackson.annotation.JsonProperty;
 
 public class CabDetails {
 	
-	@JsonProperty("driver_id")
+	@JsonProperty("driverId")
 	private int driverId;
-	@JsonProperty("driver_name")
+	@JsonProperty("driverName")
 	private String driverName;
-	@JsonProperty("cab_id")
+	@JsonProperty("cabId")
 	private String cabId;
-	@JsonProperty("cab_make")
+	@JsonProperty("cabMake")
 	private String cabMake;
 	@JsonProperty("passengers")
 	private int passengers;
@@ -18,9 +18,14 @@ public class CabDetails {
 	private double cost;
 	@JsonProperty("indicator")
 	private String indicator;
+	@JsonProperty("gpsCurrentLat")
+	private double gpsCurrentLat;
+	@JsonProperty("gpsCurrentLon")
+	private double gpsCurrentLon;
 	
 	public CabDetails(int driverId, String driverName, String cabId,
-			String cabMake, int passengers, double cost, String indicator) {
+			String cabMake, int passengers, double cost,
+			String indicator, double gpsCurrentLat, double gpsCurrentLon) {
 		this.driverId = driverId;
 		this.driverName = driverName;
 		this.cabId = cabId;
@@ -28,6 +33,8 @@ public class CabDetails {
 		this.passengers = passengers;
 		this.cost = cost;
 		this.indicator = indicator;
+		this.gpsCurrentLat = gpsCurrentLat;
+		this.gpsCurrentLon = gpsCurrentLon;
 	}
 	
 	public int getDriverId() {
@@ -85,5 +92,21 @@ public class CabDetails {
 	public void setCost(double cost) {
 		this.cost = cost;
 	}
+
+	public double getGpsCurrentLat() {
+		return gpsCurrentLat;
+	}
+
+	public void setGpsCurrentLat(double gpsCurrentLat) {
+		this.gpsCurrentLat = gpsCurrentLat;
+	}
+
+	public double getGpsCurrentLon() {
+		return gpsCurrentLon;
+	}
+
+	public void setGpsCurrentLon(double gpsCurrentLon) {
+		this.gpsCurrentLon = gpsCurrentLon;
+	}	
 
 }
