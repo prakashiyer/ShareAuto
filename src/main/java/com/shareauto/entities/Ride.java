@@ -1,10 +1,10 @@
 package com.shareauto.entities;
 
 import java.util.Calendar;
-import java.util.List;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
 import javax.persistence.Table;
 
@@ -17,6 +17,7 @@ import javax.persistence.Table;
 public class Ride {
 	
 	@Id
+	@GeneratedValue
 	@Column(name="id")
 	private int id;
 	
@@ -34,6 +35,10 @@ public class Ride {
 	private double gpsEndLat;
 	@Column(name="gpsEndLon")
 	private double gpsEndLon;
+	@Column(name="gpsCurrentLat")
+	private double gpsCurrentLat;
+	@Column(name="gpsCurrentLon")
+	private double gpsCurrentLon;
 	@Column(name="cost")
 	private double cost;
 	
@@ -43,7 +48,8 @@ public class Ride {
 	
 	public Ride(Calendar date, int driverId, String users,
 			double gpsStartLat, double gpsStartLon,
-			double gpsEndLat, double gpsEndLon, double cost) {
+			double gpsEndLat, double gpsEndLon, double cost,
+			double gpsCurrentLat, double gpsCurrentLon) {
 		this.date = date;
 		this.driverId = driverId;
 		this.users = users;
@@ -52,6 +58,8 @@ public class Ride {
 		this.gpsEndLat = gpsEndLat;
 		this.gpsEndLon = gpsEndLon;
 		this.cost = cost;
+		this.gpsCurrentLat = gpsCurrentLat;
+		this.gpsCurrentLon = gpsCurrentLon;
 	}
 
 
@@ -140,6 +148,22 @@ public class Ride {
 
 	public void setCost(double cost) {
 		this.cost = cost;
+	}
+
+	public double getGpsCurrentLat() {
+		return gpsCurrentLat;
+	}
+
+	public void setGpsCurrentLat(double gpsCurrentLat) {
+		this.gpsCurrentLat = gpsCurrentLat;
+	}
+
+	public double getGpsCurrentLon() {
+		return gpsCurrentLon;
+	}
+
+	public void setGpsCurrentLon(double gpsCurrentLon) {
+		this.gpsCurrentLon = gpsCurrentLon;
 	}
 
 	

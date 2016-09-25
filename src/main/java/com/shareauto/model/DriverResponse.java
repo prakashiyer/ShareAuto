@@ -7,7 +7,7 @@ public class DriverResponse {
 	@JsonProperty("id")
 	private int id;
 	@JsonProperty("cabId")
-	private int cabId;
+	private String cabId;
 	
 	public int getId() {
 		return id;
@@ -17,11 +17,11 @@ public class DriverResponse {
 		this.id = id;
 	}
 	
-	public int getCabId() {
+	public String getCabId() {
 		return cabId;
 	}
 	
-	public void setCabId(int cabId) {
+	public void setCabId(String cabId) {
 		this.cabId = cabId;
 	}
 

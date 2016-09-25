@@ -22,7 +22,7 @@ public class PassengerDAO {
 	@Autowired
 	private SessionFactory sessionFactory;
 	
-	public Passenger fetchDriver(int id) {
+	public Passenger fetchPassenger(int id) {
 		Session session = this.sessionFactory.getCurrentSession();		
 		Passenger passenger = (Passenger) session.load(Passenger.class, id);
 		LOGGER.info("Passenger loaded successfully, Passenger details="+passenger.getId() + "/" 
@@ -30,21 +30,20 @@ public class PassengerDAO {
 		return passenger;
 	}
 
-	public void addPassenger(Passenger passenger) {
+	public Passenger addPassenger(Passenger passenger) {
 		Session session = this.sessionFactory.getCurrentSession();
-		session.persist(passenger);
+		session.saveOrUpdate(passenger);
 		LOGGER.info("Passenger loaded successfully, Passenger details="+passenger.getId() + "/" 
 				+ passenger.getName() + "/" + passenger.getMobileNumber());
+		return passenger;
 	}
-	
+		
 	@SuppressWarnings("unchecked")
-	public List<Passenger> findPassengers(double gpsStartLat, double gpsStartLon, double gpsEndLat, double gpsEndLon) {
+	public List<Passenger> findPassengersNearby(double gpsCurrentLat, double gpsCurrentLon) {
 		Session session = this.sessionFactory.getCurrentSession();		
-		Query query = session.createQuery("select * from ride where gpsCurrentLat >= ? and gpsCurrent <=?");
-		query.setParameter(1, gpsStartLat);
-		query.setParameter(2, gpsStartLon);
-		query.setParameter(3, gpsEndLat);
-		query.setParameter(4, gpsEndLon);
+		Query query = session.createQuery("FROM Passenger WHERE (:lat - gpsCurrentLat) <= 0.01 AND (:lon - gpsCurrentLon) <= 0.01");
+		query.setDouble("lat", gpsCurrentLat);
+		query.setDouble("lon", gpsCurrentLon);
 		List<Passenger> passengers = Collections.checkedList(query.list(), Passenger.class);
 		LOGGER.info("Passengers found successfully, Passengers list size="+passengers.size());
 		return passengers;

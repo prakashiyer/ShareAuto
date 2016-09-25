@@ -2,7 +2,7 @@ package com.shareauto.model;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
 
-public class PassengerResponse {
+public class UpdateLocationResponse {
 	
 	@JsonProperty("id")
 	private int id;

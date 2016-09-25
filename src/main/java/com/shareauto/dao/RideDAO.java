@@ -30,20 +30,19 @@ public class RideDAO {
 		return ride;
 	}
 
-	public void addRide(Ride ride) {
+	public Ride addRide(Ride ride) {
 		Session session = this.sessionFactory.getCurrentSession();
 		session.saveOrUpdate(ride);
-		LOGGER.info("Ride saved successfully, ride Details="+ ride.getDriverId());
+		LOGGER.info("Ride saved successfully, ride Details="+ ride.getId());
+		return ride;
 	}
 	
 	@SuppressWarnings("unchecked")
-	public List<Ride> findRides(double gpsStartLat, double gpsStartLon, double gpsEndLat, double gpsEndLon) {
+	public List<Ride> findRides(double gpsStartLat, double gpsStartLon) {
 		Session session = this.sessionFactory.getCurrentSession();		
-		Query query = session.createQuery("select * from ride where gpsStart >= ? and gpsEnd <=?");
-		query.setParameter(1, gpsStartLat);
-		query.setParameter(2, gpsStartLon);
-		query.setParameter(3, gpsEndLat);
-		query.setParameter(4, gpsEndLon);
+		Query query = session.createQuery("from Ride where (:lat - gpsCurrentLat) <= 0.01 AND (:lon - gpsCurrentLon) <= 0.01");
+		query.setDouble("lat", gpsStartLat);
+		query.setDouble("lon", gpsStartLon);
 		List<Ride> rides = Collections.checkedList(query.list(), Ride.class);
 		LOGGER.info("Rides found successfully, Rides list size="+rides.size());
 		return rides;

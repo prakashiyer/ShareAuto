@@ -30,19 +30,20 @@ public class DriverDAO {
 		return driver;
 	}
 
-	public void addDriver(Driver driver) {
+	public Driver addDriver(Driver driver) {
 		Session session = this.sessionFactory.getCurrentSession();
-		session.persist(driver);
+		session.saveOrUpdate(driver);
 		LOGGER.info("Driver saved successfully, Driver Details="+driver.getId() + "/" 
 				+ driver.getName() + "/" + driver.getMobileNumber());
+		return driver;
 	}
 	
 	@SuppressWarnings("unchecked")
 	public List<Driver> findDrivers(double gpsStartLat, double gpsStartLon) {
 		Session session = this.sessionFactory.getCurrentSession();		
-		Query query = session.createQuery("select * from driver where gpsCurrentLat > ? and gpsCurrentLat < ?");
-		query.setParameter(1, gpsStartLat);
-		query.setParameter(2, gpsStartLon);
+		Query query = session.createQuery("FROM Driver WHERE (:lat - gpsCurrentLat) <= 0.01 AND (:lon - gpsCurrentLon) <= 0.01");
+		query.setDouble("lat", gpsStartLat);
+		query.setParameter("lon", gpsStartLon);
 		List<Driver> drivers = Collections.checkedList(query.list(), Driver.class);
 		LOGGER.info("Drivers found successfully, Drivers list size="+drivers.size());
 		return drivers;

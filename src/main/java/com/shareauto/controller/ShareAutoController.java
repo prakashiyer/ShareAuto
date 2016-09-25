@@ -28,6 +28,8 @@ import com.shareauto.model.DriverRequest;
 import com.shareauto.model.DriverResponse;
 import com.shareauto.model.PassengerRequest;
 import com.shareauto.model.PassengerResponse;
+import com.shareauto.model.UpdateLocationRequest;
+import com.shareauto.model.UpdateLocationResponse;
 import com.shareauto.model.UpdateRideRequest;
 import com.shareauto.model.UpdateRideResponse;
 import com.shareauto.utils.ShareAutoUtil;
@@ -55,8 +57,8 @@ public class ShareAutoController {
 			public DriverResponse call() throws Exception {
 				DriverResponse result = new DriverResponse();
 				Driver driver = driverDao.fetchDriver(1);
-				result.setId(1);
-				result.setCabId(1);
+				result.setId(driver.getId());
+				result.setCabId(driver.getCabNumber());
 				return result;
 			}
 		};
@@ -76,14 +78,51 @@ public class ShareAutoController {
 						request.getCabMake(), request.getCabColor(),
 						request.getCabNumber(),request.getGpsCurrentLat(),
 						request.getGpsCurrentLon());
-				driverDao.addDriver(driver);
+				driver = driverDao.addDriver(driver);
+				result.setId(driver.getId());
+				result.setCabId(driver.getCabNumber());
 				return result;
 			}
 		};
 		return asyncTask;
 	}
 	
-	@RequestMapping(value = { "/addPassenger" }, method = RequestMethod.POST, produces = "application/json")
+	@RequestMapping(value = { "/updateLocation" }, method = RequestMethod.POST, produces = "application/json")
+	public Callable<UpdateLocationResponse> updateDriverLocation(
+			@RequestBody UpdateLocationRequest request) {
+		
+		Callable<UpdateLocationResponse> asyncTask = new Callable<UpdateLocationResponse>() {
+			@Override
+			public UpdateLocationResponse call() throws Exception {
+				UpdateLocationResponse result = new UpdateLocationResponse();
+				LOGGER.info("Adding driver details for: " +request.getId());
+				if("driver".equals(request.getType())) {
+					Driver driver = driverDao.fetchDriver(request.getId());
+					driver.setGpsCurrentLat(request.getGpsCurrentLat());
+					driver.setGpsCurrentLon(request.getGpsCurrentLon());
+					driver = driverDao.addDriver(driver);
+					result.setId(driver.getId());
+				} else if ("user".equals(request.getType())) {
+					Passenger passenger = passengerDao.fetchPassenger(request.getId());
+					passenger.setGpsCurrentLat(request.getGpsCurrentLat());
+					passenger.setGpsCurrentLon(request.getGpsCurrentLon());
+					passenger = passengerDao.addPassenger(passenger);
+					result.setId(passenger.getId());
+				} else if ("ride".equals(request.getType())) {
+					Ride ride = rideDao.fetchRide(request.getId());
+					ride.setGpsCurrentLat(request.getGpsCurrentLat());
+					ride.setGpsCurrentLon(request.getGpsCurrentLon());
+					ride = rideDao.addRide(ride);
+					result.setId(ride.getId());
+				}
+				
+				return result;
+			}
+		};
+		return asyncTask;
+	}
+	
+	@RequestMapping(value = { "/addUser" }, method = RequestMethod.POST, produces = "application/json")
 	public Callable<PassengerResponse> addPassenger(@RequestBody PassengerRequest request) {
 		
 		Callable<PassengerResponse> asyncTask = new Callable<PassengerResponse>() {
@@ -94,7 +133,8 @@ public class ShareAutoController {
 				Passenger passenger = new Passenger(request.getName(), request.getMobileNumber(),
 						request.getEmailId(), request.getGender(), request.getCity(),
 						request.getGpsCurrentLat(), request.getGpsCurrentLon());
-				passengerDao.addPassenger(passenger);
+				passenger = passengerDao.addPassenger(passenger);
+				result.setId(passenger.getId());
 				return result;
 			}
 		};
@@ -115,8 +155,9 @@ public class ShareAutoController {
 				Ride ride = new Ride(Calendar.getInstance(), request.getDriverId(), StringUtils.collectionToCommaDelimitedString(users),
 						request.getGpsStartLat(), request.getGpsStartLon(),
 						request.getGpsEndLat(), request.getGpsEndLon(),
-						request.getCost());
-				rideDao.addRide(ride);
+						request.getCost(), request.getGpsCurrentLat(), request.getGpsCurrentLon());
+				ride = rideDao.addRide(ride);
+				result.setId(ride.getId());
 				return result;
 			}
 		};
@@ -135,14 +176,15 @@ public class ShareAutoController {
 				users = users +","+String.valueOf(request.getUserId());
 				ride.setUsers(users);
 				LOGGER.info("Updating ride details for: " +request.getUserId());
-				rideDao.addRide(ride);
+				ride = rideDao.addRide(ride);
+				result.setId(ride.getId());
 				return result;
 			}
 		};
 		return asyncTask;
 	}
 	
-	@RequestMapping(value = { "/searchCabs" }, method = RequestMethod.GET, produces = "application/json")
+	@RequestMapping(value = { "/searchCabs" }, method = RequestMethod.POST, produces = "application/json")
 	public Callable<CabSearchResponse> searchCabs(@RequestBody CabSearchRequest request) {
 		
 		Callable<CabSearchResponse> asyncTask = new Callable<CabSearchResponse>() {
@@ -154,8 +196,7 @@ public class ShareAutoController {
 				double km = ShareAutoUtil.distance(request.getGpsStartLat(), request.getGpsStartLon(),
 						request.getGpsEndLat(), request.getGpsEndLon(), "K");
 				double cost = 10 * km;
-				List<Passenger> passengers = passengerDao.findPassengers(request.getGpsStartLat(), request.getGpsStartLon(),
-						request.getGpsEndLat(), request.getGpsEndLon());
+				List<Passenger> passengers = passengerDao.findPassengersNearby(request.getGpsCurrentLat(), request.getGpsCurrentLon());
 				String indicator = "red";
 				if(passengers.size() >= 3) {
 					indicator = "green";
@@ -169,8 +210,7 @@ public class ShareAutoController {
 							driver.getMake(), 0, cost, indicator, driver.getGpsCurrentLat(), driver.getGpsCurrentLon());
 					cabDetails.add(cab);
 				}
-				List<Ride> rides = rideDao.findRides(request.getGpsStartLat(), request.getGpsStartLon(),
-						request.getGpsEndLat(), request.getGpsEndLon());
+				List<Ride> rides = rideDao.findRides(request.getGpsStartLat(), request.getGpsStartLon());
 				for(Ride ride:rides){
 					Driver driver = driverDao.fetchDriver(ride.getDriverId());
 					int seatsFilled = StringUtils.commaDelimitedListToSet(ride.getUsers()).size();
@@ -179,7 +219,7 @@ public class ShareAutoController {
 					} else if((seatsFilled >=2 && passengers.size() >= 1) || (seatsFilled >=1 && passengers.size() >= 2)) {
 						indicator = "yellow";
 					}
-					CabDetails cab = new CabDetails(ride.getDriverId(), driver.getName(), driver.getCabNumber(),
+					CabDetails cab = new CabDetails(driver.getId(), driver.getName(), driver.getCabNumber(),
 							driver.getMake(), seatsFilled, cost, indicator, driver.getGpsCurrentLat(), driver.getGpsCurrentLon());
 					cabDetails.add(cab);
 				}
@@ -190,8 +230,5 @@ public class ShareAutoController {
 		};
 		return asyncTask;
 	}
-	
-	
-	
 
 }

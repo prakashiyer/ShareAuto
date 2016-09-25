@@ -12,6 +12,10 @@ public class CabSearchRequest {
 	private double gpsEndLat;
 	@JsonProperty("gpsEndLon")
 	private double gpsEndLon;
+	@JsonProperty("gpsCurrentLat")
+	private double gpsCurrentLat;
+	@JsonProperty("gpsCurrentLon")
+	private double gpsCurrentLon;
 	@JsonProperty("gender")
 	private String gender;
 	
@@ -45,6 +49,17 @@ public class CabSearchRequest {
 	public void setGpsEndLon(double gpsEndLon) {
 		this.gpsEndLon = gpsEndLon;
 	}
-		
+	public double getGpsCurrentLat() {
+		return gpsCurrentLat;
+	}
+	public void setGpsCurrentLat(double gpsCurrentLat) {
+		this.gpsCurrentLat = gpsCurrentLat;
+	}
+	public double getGpsCurrentLon() {
+		return gpsCurrentLon;
+	}
+	public void setGpsCurrentLon(double gpsCurrentLon) {
+		this.gpsCurrentLon = gpsCurrentLon;
+	}
 
 }
